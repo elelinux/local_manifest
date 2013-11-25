@@ -47,14 +47,15 @@ function help {
     echo -e "usage: $0 [OPTIONS] APK DEVICE \n"
 
     echo "Options:
-  -h, --help      Show this help message and exit
-  -l, --clean     Runs make clean based on the device
-  -c, --clobber   Performs a make clobber on the source
-  -s, --sync      Runs a repo sync
-  -b, --build     Builds the current source. Requires DEVICE be provided
-  -a, --all       Builds all devices listed in $VENDOR/vendorsetup.sh
-  -m, --mmm       Compiles the specified apk individually. Requires APK be provided
-  -p, --pick      Runs picks script"
+  -h, --help          Show this help message and exit
+  -l, --clean         Runs make clean based on the device
+  -c, --clobber       Performs a make clobber on the source
+  -i, --installclean  Runs a make installclean based on the device
+  -s, --sync          Runs a repo sync
+  -b, --build         Builds the current source. Requires DEVICE be provided
+  -a, --all           Builds all devices listed in $VENDOR/vendorsetup.sh
+  -m, --mmm           Compiles the specified apk individually. Requires APK be provided
+  -p, --pick          Run picks script"
 }
 
 function clean {
@@ -64,6 +65,11 @@ function clean {
 
 function clobber {
     make clobber
+}
+
+function installclean {
+    lunch aokp_$DEVICE-userdebug
+    make installclean
 }
 
 function remove {
@@ -86,6 +92,7 @@ do
         --help) args="${args} -h ";;
         --clean) args="${args} -l ";;
         --clobber) args="${args} -c ";;
+        --installclean) args="${args} -i";;
         --sync) args="${args} -s ";;
         --build) args="${args} -b ";;
         --all) args="${args} -a ";;
@@ -97,7 +104,7 @@ do
 done
 
 eval set -- $args
-    while getopts ":hspclam:b:?" option 2>/dev/null
+    while getopts ":hspcliam:b:?" option 2>/dev/null
     do
         case $option in
             h) help
@@ -108,6 +115,8 @@ eval set -- $args
             c) clobber
                 ;;
             l) clean
+                ;;
+            i) installclean
                 ;;
             b) build
                 ;;
