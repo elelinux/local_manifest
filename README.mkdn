@@ -1,0 +1,19 @@
+# Repo init AOKP
+repo init -u https://github.com/AOKP/platform_manifest.git -b kitkat
+
+# To utilize this local manifest with AOKP
+curl -L -o .repo/local_manifest.xml -O -L https://raw.github.com/BMc08GT/local_manifest/master/default.xml
+
+# Symlink
+. local_manifest/linker
+
+# Sync
+./sync
+
+# Build
+  './compile help' to view commands
+
+then
+
+  ./compile "command" "device"
+

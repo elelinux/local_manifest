@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+
+<!-- Default manifest to pull this repo in -->
+<!-- Other files can be overriden in scripts -->
+
+  <remote  name="bmc"
+           fetch="https://github.com/BMc08GT/" />
+           
+           
+  <!-- add this repo -->
+  <project path="local_manifest" name="local_manifest" remote="bmc" revision="master" />
+  
+</manifest>

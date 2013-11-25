@@ -1,0 +1,15 @@
+if [ ! -e .symlinked ]; then
+touch .symlinked
+echo " Symlinking scripts: picks.sh, update.sh, sync, and compile"
+ln -s local_manifest/picks.sh picks.sh
+ln -s local_manifest/sync sync
+ln -s local_manifest/compile compile
+ln -s /local_manifest/update_forks update_forks
+echo " making executable"
+chmod a+x picks.sh
+chmod a+x sync
+chmod a+x compile
+chmod a+x update_forks
+else
+echo " Scripts already setup."
+fi

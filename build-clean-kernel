@@ -1,0 +1,179 @@
+#!/bin/bash
+# Copyright (C) 2013 BMc08GT
+# Build Script.  Use bash to run this script, bash build-clean-kernel from root of source tree
+# Args:
+# $1 = feed device
+# requires vendor/<rom>/tools structure with zip/* and mkbootimg inside
+# example: bash ./vendor/aokp/tools/build-clean-kernel d2vzw 
+#############################################################
+DEVICE=$1;
+
+# Tools location housing tools for this script
+TOOLS_LOC=vendor/*/tools
+ZIP_LOC=$TOOLS_LOC/zip
+
+#Find manufacturer based on device
+MANF=`find device/*/ -name $DEVICE`;
+MANF=${MANF%/*};
+MANF=${MANF##*/};
+
+# Defconfig
+DEFCONFIG=`grep -rH 'defconfig' device/$MANF/$DEVICE `;
+DEFCONFIG=${DEFCONFIG##*:};
+DEFCONFIG=`echo $DEFCONFIG | cut -c3- `;
+
+# Kernel path
+KERNELPATH=` find kernel/$MANF -name $DEFCONFIG `;
+KERNELPATH=${KERNELPATH%/*/*/*/*};
+
+
+CHECK_FOR_DEVICE_INIT=` find device/$MANF/$DEVICE -name init.* `;
+CHECK_INC_SECONDARY=`grep -rH "inherit-product, device/$MANF/" device/$MANF/$DEVICE/device.mk`;
+if [ "$CHECK_INC_SECONDARY" != '' ]; then
+    CHECK_INC_SECONDARY=${CHECK_INC_SECONDARY##*,};
+    CHECK_INC_SECONDARY=${CHECK_INC_SECONDARY%?};
+  SECONDARY_INITS=${CHECK_INC_SECONDARY#/*};
+	SECONDARY_INITS=` find $SECONDARY_INITS -name init.* `;
+	CHECK_INC_TERTIARY=` grep -rH "inherit-product, device/$MANF" $CHECK_INC_SECONDARY `;
+	if [ "$CHECK_INC_TERTIARY" != '' ]; then
+	    CHECK_INC_TERTIARY=${CHECK_INC_TERTIARY##*,};
+		CHECK_INC_TERTIARY=${CHECK_INC_TERTIARY%?};
+		TERTIARY_INITS=${CHECK_INC_TERTIAARY#/*};
+	    TERTIARY_INITS=` find $TERTIARY_INITS -name init.* `;
+		CHECK_INC_QUARTENARY=` grep -rH "inherit-product, device/$MANF" $CHECK_INC_TERTIARY `;
+		if [ "$CHECK_INC_QUARTENARY" != '' ]; then
+		    CHECK_INC_QUARTENARY=${CHECK_INC_QUARTENARY##*,};
+		    CHECK_INC_QUARTENARY=${CHECK_INC_QUARTENARY%?};
+			QUARTENARY_INITS=${CHECK_INC_QUARTENARY#/*};
+	        QUARTENARY_INITS=` find $QUARTENARY_INITS -name init.* `;
+		fi
+	fi
+fi
+
+
+# Grab ramdisk args based on manufacturer and device
+RAMDISK_ARGS_FILE=`grep -rH $KERNELSRC device/$MANF `;
+RAMDISK_ARGS_FILE=${RAMDISK_ARGS%%:*};
+ARGS_DIRECTORY=${RAMDISK_ARGS%/*};
+
+ABOOT_HW=`grep -rH 'androidboot.hardware' $ARGS_DIRECTORY `;
+ABOOT_HW=${ABOOT_HW##*:};
+ABOOT_HW=`echo $ABOOT_HW | cut -c3- `;
+ABOOT_HW=${ABOOT_HW#*=};
+BASE=`grep -rH 'BOARD_KERNEL_BASE' $ARGS_DIRECTORY `;
+BASE=${BASE##*x};
+OFFSET=`grep -rH 'ramdisk_offset' $ARGS_DIRECTORY `;
+OFFSET=${OFFSET##*x};
+ADDR=` expr $BASE + $OFFSET `
+
+#############################################################
+# Export above variables
+export $DEVICE;
+export $TOOLS_LOC;
+export $ZIP_LOC;
+export $MANF;
+export $DEFCONFIG;
+export $KERNELPATH;
+export $CHECK_FOR_DEVICE_INIT;
+export $CHECK_INC_SECONDARY;
+export $SECONDARY_INITS;
+export $CHECK_INC_TERTIARY;
+export $TERTIARY_INITS;
+export $CHECK_INC_QUARTENARY;
+export $QUARTENARY_INITS;
+export $RAMDISK_ARGS;
+export $ARGS_DIRECTORY;
+export $ABOOT_HW;
+export $BASE;
+export $ADDR;
+
+
+# Source Directory PATH
+# Script is executed from vendor/<rom>/tools so cd back to tree root
+export DIRSRC="$( cd ../../.. && pwd)";
+
+# Kernel Source PATH
+export KERNELSRC=$DIRSRC/$KERNELPATH;
+
+# Clean-kernel output
+mkdir -p out && mkdir -p out/clean-kernel;
+export CLEAN_DIR=$DIRSRC/out/clean-kernel/;
+
+# Target gcc version
+export TARGET_GCC=4.7;
+export ARM_EABI_TOOLCHAIN=$DIRSRC/prebuilts/gcc/linux-x86/arm/arm-eabi-$TARGET_GCC;
+export PATH=$PATH:$ARM_EABI_TOOLCHAIN/bin:$ARM_EABI_TOOLCHAIN/arm-eabi/bin;
+
+# Cross compile with arm
+export ARCH=arm;
+export CCOMPILE=$CROSS_COMPILE;
+export CROSS_COMPILE=$ARM_EABI_TOOLCHAIN/bin/arm-eabi-;
+
+#############################################################
+
+echo "Cleaning target kernel source";
+cd $KERNELSRC && make -C $KERNELSRC -j `cat /proc/cpuinfo | grep "^processor" | wc -l` "$@" clean;
+
+# Start the build
+echo "";
+echo "Starting the kernel build";
+echo "";
+make -C $KERNELSRC -j `cat /proc/cpuinfo | grep "^processor" | wc -l` "$@" $DEFCONFIG && time make -C $KERNELSRC -j `cat /proc/cpuinfo | grep "^processor" | wc -l` "$@" zImage && make -C $KERNELSRC -j `cat /proc/cpuinfo | grep "^processor" | wc -l` "$@" modules;
+
+# Creating spoof pkg directories for zip
+if [ ! -e $ZIP_LOC ]; then
+    echo " No $ZIP_LOC!! Must have prebuilt zip location for spoofing to create package!";
+	exit;
+else
+    cp -R $ZIP_LOC $KERNELSRC;
+fi
+mkdir -p $KERNELSRC/ramdisk;
+
+#############################################################
+
+# Find modules and prepare them for packaging
+cd $KERNELSRC;
+find drivers -name "*.ko" | xargs $CROSS_COMPILE-strip --strip-unneeded;
+find drivers -name "*.ko" | xargs -i cp {} zip/system/lib/modules/;
+
+# Dyanmically find ramdisk and prepare for packaging
+cd ramdisk;
+cp system/core/rootdir/init.rc .;
+cp system/core/rootdir/ueventd.rc .;
+
+# Use above inc_paths to find init files and cp them here overriding the system/core counterpart
+if [ "$CHECK_FOR_DEVICE_INIT" != "" ]; then
+    echo $CHECK_FOR_DEVICE_INIT | sed -e 's/\s\+/\n/g' | (while read line; do
+        cp -f $line .;
+    done;) 
+fi
+if [ "$SECONDARY_INITS" != "" ]; then
+    echo $SECONDARY_INITS | sed -e 's/\s\+/\n/g' | (while read line; do
+	    cp -f $line .;
+	done;)
+    if [ "$TERTIARY_INITS" != "" ]; then
+        echo $TERTIARY_INITS | sed -e 's/\s\+/\n/g' | (while read line; do
+	        cp -f $line .;
+	    done;)
+        if [ "$QUARTENARY_INITS" != "" ]; then
+            echo $QUARTENARY_INITS | sed -e 's/\s\+/\n/g' | (while read line; do
+	            cp -f $line .;
+	        done;)
+        fi
+    fi
+fi	
+
+# Create ramdisk image
+find . | cpio -o -H newc | gzip > /tmp/ramdisk.img;
+
+cd ..;
+$TOOLS_LOC/mkbootimg --cmdline 'console=null androidboot.hardware=$ABOOT_HW' --base 0x$BASE --ramdiskaddr 0x${ADDR} --kernel arch/arm/boot/zImage --ramdisk /tmp/ramdisk.img -o zip/boot.img
+cd zip;
+zip -r clean-kernel-$DEVICE$APPEND.zip *
+mv clean-kernel-$DEVICE$APPEND.zip $CLEAN_DIR/;
+
+#############################################################
+echo "";
+echo " Making kernel directory proper now.";
+cd $KERNELSRC && make mrproper && cd $DIRSRC;
+echo "";

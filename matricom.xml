@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+
+  <remote  name="gh"
+           fetch="https://github.com/BMc08GT/" />
+           
+  <remove-project name="AOKP/vendor_aokp" />
+           
+  
+  <!-- add this repo -->
+  <project path="local_manifest" name="local_manifest" remote="gh" revision="master" />
+  
+  <!-- MOTO X -->
+  
+  <!-- ???? -->
+  <project path="device/matricom/mx2" name="device_matricom_mx2" remote="gh" revision="jb-mr2" />
+  <project path="kernel/matricom/mx2" name="kernel_matricom_mx2" remote="gh" revision="jb-mr2" />
+  <project path="vendor/matricom" name="vendor_matricom" remote="gh" revision="jb-mr2" />
+  
+  <project path="vendor/aokp" name="vendor_aokp" remote="gh" revision="jb-mr2" />
+  
+</manifest> 
