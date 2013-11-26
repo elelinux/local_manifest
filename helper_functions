@@ -30,7 +30,22 @@ verify_clean_merge() {
 		# Merge failed since HEAD doesn't match upstream
 		die_dialog
 	fi
-} 
+}
+
+get_latest_ps() {
+    if [ -z "$1" ] || [ "$1" = '--help' ]
+    then
+        echo "error"
+    else
+        gerrit=gerrit.aokp.co
+        project=`git config --get remote.aokp.projectname`
+        patch="$1"
+        submission=`echo $patch | cut -f1 -d "/" | tail -c 3`
+        latest=$( git ls-remote http://$gerrit/$project | grep /changes/$submission/$patch | tail -1 )
+        latest=${latest#*/*/*/*}
+        echo "$latest"
+    fi
+}
 
 die() {
         echo "$@" 1>&2 ;
