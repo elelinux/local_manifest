@@ -9,38 +9,22 @@ set -o history
 
 LOCAL_MANIFEST=.repo/local_manifests/local_manifest.xml
 REMOTE=bmc
-ROOT=`pwd`
 
-get_our_head() {
-	git rev-parse HEAD
-}
+DIE_REF=$1
 
-get_their_head() {
-	git rev-parse aokp/kitkat
-}
+# Initialize helper functions
+. helper_functions
 
-fixxor() {
-	local FIXED=0
-	echo "Merge failed. Please fix."
-	read command
-	case command in
-		'git status') git status ;;
-		'git commit -a') git commit -a ;;
-		*) echo "Invalid selection - 'git status' or 'git commit -a'";;
-	esac
-	[[ verify_fixed ]] || FIXED=1
-}
-
-verify_fixed() {
-	echo "Is merge fixed (y/n)?"
-	read fixed
-	case fixed in
-		y|Y) continue ;;
-		n|N) fixxor ;;
-		*) echo "Invalid selection."
-	esac
-}
-
+if [ "$DIE_REF" = "--resume" ]; then
+	echo "Continuing merge...."
+	git commit -a
+	cd $ROOT
+elif [ "$DIE_REF" = "--abort" ]; then
+	echo "Aborting merge...."
+	git reset --hard aokp/kitkat
+	cd $ROOT
+	exit 0;
+fi
 
 [ -e ${LOCAL_MANIFEST} ] || exit 0
 grep ${REMOTE} ${LOCAL_MANIFEST} | cut -f2 -d '"' | sed 1d | while read line; do
@@ -51,24 +35,12 @@ grep ${REMOTE} ${LOCAL_MANIFEST} | cut -f2 -d '"' | sed 1d | while read line; do
 		OUR_HEAD=${get_our_head}
 		THEIR_HEAD=${get_their_head}
 		if [ ${OUR_HEAD} != ${THEIR_HEAD} ]; then
-			# We'll than we want better HEAD damnit
+			# We'll then we want better HEAD damnit
 			git pull aokp kitkat >/dev/null 2>&1
 			#Check HEAD to verify clean merge
 			if [ ${OUR_HEAD} != ${get_our_head} ]; then
 				# Merge was not clean; allow fixxor
-				echo "Merge failed. Please fix."
-				read command
-				case command in
-					'git status')
-						git status
-					;;
-					'git commit -a')
-						git commit -a
-					;;
-					*)
-						echo "Invalid selection - 'git status' or 'git commit -a'"
-					;;
-			        esac
+				die_dialog
 			fi
 		fi
 		cd $ROOT

@@ -1,7 +1,8 @@
 #!/bin/bash
+# Initialize helper functions
+. helper_functions
 
-BUILD_DIR=$(pwd)
-VENDOR=$BUILD_DIR/vendor/aokp
+VENDOR=$ROOT/vendor/aokp
 
 for i in $@; do :; done
 DEVICE=$i
@@ -81,7 +82,7 @@ then
     help
     exit
 else
-    cd $BUILD_DIR
+    cd $ROOT
     . build/envsetup.sh
 fi
 

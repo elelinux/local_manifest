@@ -1,0 +1,47 @@
+#!/bin/bash
+# Helper script that can be imported from all scripts
+# Yay organization
+
+get_our_head() {
+        git rev-parse HEAD
+}
+
+get_their_head() {
+        git rev-parse aokp/kitkat
+}
+
+verify_clean_pick() {
+	local our_head=$1
+	local new_head=$(get_our_head)
+	if [ "${our_head}" == "${new_head}" ]; then
+		# Pick failed since HEaD matches
+		die_dialog
+	else
+		echo clean pick
+		OUR_HEAD=${new_head}
+	fi
+}
+
+verify_clean_merge() {
+	# Opposite logic than picks
+	local our_head=$1
+	local new_head=$(get_their_head)
+	if [ "${our_head}" != "${new_head}" ]; then
+		# Merge failed since HEAD doesn't match upstream
+		die_dialog
+	fi
+} 
+
+die() {
+        echo "$@" 1>&2 ;
+        exit 0;
+}
+
+die_dialog() {
+        echo "Merge failed. Please fix."
+        die "resume: $0 --resume | abort:  $0 --abort"
+        exit 0;
+}
+
+ROOT=${ANDROID_BUILD_TOP}
+
