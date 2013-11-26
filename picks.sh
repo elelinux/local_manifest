@@ -27,8 +27,8 @@ esac
 if [ "$FILTER" = "" ]; then
 
 cd device/htc/m7-common
-pstest 13512/1
-pstest 13514/3
+pstest 13512/2
+pstest 13514/4
 pstest 13518/1
 pstest 13519/1
 cd $root
@@ -51,8 +51,30 @@ pstest 13516/1
 pstest 13517/1
 cd $root
 
+cd hardware/libhardware_legacy
+pstest 13526/1
+pstest 13527/1
+pstest 13528/1
+pstest 13529/1
+pstest 13530/1
+pstest 13531/1
+pstest 13532/1
+pstest 13533/1
+pstest 13534/1
+cd $root
+
 cd hardware/qcom/display-caf
 pstest 13501/2
+cd $root
+
+cd packages/apps/Settings
+pstest 13524/1
+pstest 13535/1
+pstest 13536/1
+cd $root
+
+cd vendor/aokp
+pstest 13537/1
 cd $root
 
 fi
