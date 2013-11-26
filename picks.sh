@@ -4,13 +4,14 @@
 root=`pwd`
 cd $root
 
-# Set bullshit value for filter
-FILTER=bullshit
+# Set null value for filter
+FILTER=
 
 function filter_list {
 	echo " Current filters:"
 	echo "-----------------"
 	echo " No filter <enter>"
+	FILTER=bullshit
 	exit 0
 }
 
@@ -18,11 +19,7 @@ function filter_list {
 . build/envsetup.sh >/dev/null 2>&1
 
 echo "Which filter to be used for picks [default: No filter<enter>]"
-read pick_filter
-case pick_filter in
-	"") FILTER="" ;;
-	*) echo "This is not a valid filter" && filter_list;;
-esac
+read FILTER
 
 if [ "$FILTER" = "" ]; then
 
