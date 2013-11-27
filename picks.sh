@@ -18,17 +18,7 @@ function filter_list {
 	exit 0
 }
 
-# In order to use pstest must be in build environment
-. build/envsetup.sh >/dev/null 2>&1
-
-if [ "$DIE_REF" == "--resume" ]; then
-	# continue through the paces
-elif [ "$DIE_REF" == "--abort" ]; then
-	# abort! abort! abort!
-	git reset --hard
-	cd $ROOT
-	exit 0;
-fi
+function pick_em() {
 echo "Which filter to be used for picks [default: No filter<enter>]"
 read FILTER
 
@@ -37,7 +27,7 @@ if [ "$FILTER" = "" ]; then
 cd build
 #Update pstest
 HEAD=${get_our_head}
-pstest 13547/1
+pstest 13548/1
 verify_clean_pick $HEAD
 cd $ROOT
 
@@ -45,7 +35,7 @@ cd $ROOT
 . build/envsetup.sh >/dev/null 2>&1
 
 cd build
-pstest 13548
+pstest 13547
 verify_clean_pick $HEAD
 cd $ROOT
 
@@ -57,12 +47,27 @@ cd $ROOT
 
 cd packages/apps/Settings
 HEAD=${get_our_head}
-pstest 13524
-verify_clean_pick $HEAD
 pstest 13535
 verify_clean_pick $HEAD
 pstest 13536
 verify_clean_pick $HEAD
 cd $ROOT
 
+fi
+
+}
+
+# In order to use pstest must be in build environment
+. build/envsetup.sh >/dev/null 2>&1
+
+if [ "$DIE_REF" == "--resume" ]; then
+        # continue through the paces
+        pick_em
+elif [ "$DIE_REF" == "--abort" ]; then
+        # abort! abort! abort!
+        git reset --hard
+        cd $ROOT
+        exit 0;
+else
+        pick_em
 fi
