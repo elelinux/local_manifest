@@ -34,70 +34,6 @@ read FILTER
 
 if [ "$FILTER" = "" ]; then
 
-cd device/htc/m7-common
-HEAD=${get_our_head}
-pstest 13512/2
-verify_clean_pick $HEAD
-pstest 13514/4
-verify_clean_pick $HEAD
-pstest 13518/1
-verify_clean_pick $HEAD
-pstest 13519/1
-verify_clean_pick $HEAD
-cd $ROOT
-
-cd frameworks/base
-HEAD=${get_our_head}
-pstest 13505/1
-verify_clean_pick $HEAD
-pstest 13506/1
-verify_clean_pick $HEAD
-pstest 13507/1
-verify_clean_pick $HEAD
-pstest 13508/1
-verify_clean_pick $HEAD
-pstest 13509/1
-verify_clean_pick $HEAD
-cd $ROOT
-
-cd frameworks/native
-HEAD=${get_our_head}
-pstest 13488/1
-verify_clean_pick $HEAD
-cd $ROOT
-
-cd hardware/libhardware
-HEAD=${get_our_head}
-pstest 13515/1
-verify_clean_pick $HEAD
-pstest 13516/1
-verify_clean_pick $HEAD
-pstest 13517/1
-verify_clean_pick $HEAD
-cd $ROOT
-
-cd hardware/libhardware_legacy
-HEAD=${get_our_head}
-pstest 13526/1
-verify_clean_pick $HEAD
-pstest 13527/1
-verify_clean_pick $HEAD
-pstest 13528/1
-verify_clean_pick $HEAD
-pstest 13529/1
-verify_clean_pick $HEAD
-pstest 13530/1
-verify_clean_pick $HEAD
-pstest 13531/1
-verify_clean_pick $HEAD
-pstest 13532/1
-verify_clean_pick $HEAD
-pstest 13533/1
-verify_clean_pick $HEAD
-pstest 13534/1
-verify_clean_pick $HEAD
-cd $ROOT
-
 cd hardware/qcom/display-caf
 OUR_HEAD=${get_our_head}
 pstest 13501/2
@@ -111,12 +47,6 @@ verify_clean_pick $HEAD
 pstest 13535/1
 verify_clean_pick $HEAD
 pstest 13536/1
-verify_clean_pick $HEAD
-cd $ROOT
-
-cd vendor/aokp
-OUR_HEAD=${get_our_head}
-pstest 13537/1
 verify_clean_pick $HEAD
 cd $ROOT
 
