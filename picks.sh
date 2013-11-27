@@ -35,26 +35,33 @@ read FILTER
 if [ "$FILTER" = "" ]; then
 
 cd build
+#Update pstest
 HEAD=${get_our_head}
 pstest 13547/1
 verify_clean_pick $HEAD
-pstest 13548/1
+cd $ROOT
+
+# Reinitialize with updated pstest
+. build/envsetup.sh >/dev/null 2>&1
+
+cd build
+pstest 13548
 verify_clean_pick $HEAD
 cd $ROOT
 
 cd hardware/qcom/display-caf
 HEAD=${get_our_head}
-pstest 13501/2
+pstest 13501
 verify_clean_pick $HEAD
 cd $ROOT
 
 cd packages/apps/Settings
 HEAD=${get_our_head}
-pstest 13524/1
+pstest 13524
 verify_clean_pick $HEAD
-pstest 13535/1
+pstest 13535
 verify_clean_pick $HEAD
-pstest 13536/1
+pstest 13536
 verify_clean_pick $HEAD
 cd $ROOT
 
