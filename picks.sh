@@ -34,14 +34,22 @@ read FILTER
 
 if [ "$FILTER" = "" ]; then
 
+cd build
+HEAD=${get_our_head}
+pstest 13547/1
+verify_clean_pick $HEAD
+pstest 13548/1
+verify_clean_pick $HEAD
+cd $ROOT
+
 cd hardware/qcom/display-caf
-OUR_HEAD=${get_our_head}
+HEAD=${get_our_head}
 pstest 13501/2
 verify_clean_pick $HEAD
 cd $ROOT
 
 cd packages/apps/Settings
-OUR_HEAD=${get_our_head}
+HEAD=${get_our_head}
 pstest 13524/1
 verify_clean_pick $HEAD
 pstest 13535/1
