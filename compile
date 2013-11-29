@@ -86,7 +86,6 @@ then
     help
     exit
 else
-    cd $ROOT
     . build/envsetup.sh
 fi
 
