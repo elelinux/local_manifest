@@ -27,7 +27,7 @@ if [ "$FILTER" = "" ]; then
 cd build
 #Update pstest
 HEAD=${get_our_head}
-pstest 13548/1
+pstest 13548/2
 verify_clean_pick $HEAD
 cd $ROOT
 
@@ -35,15 +35,14 @@ cd $ROOT
 . build/envsetup.sh >/dev/null 2>&1
 
 cd build
-pstest 13547
+pstest 13607
 verify_clean_pick $HEAD
 cd $ROOT
 
-cd hardware/qcom/display-caf
-HEAD=${get_our_head}
-pstest 13501
+cd frameworks/base
+
+pstest 13546
 verify_clean_pick $HEAD
-cd $ROOT
 
 cd packages/apps/Settings
 HEAD=${get_our_head}
