@@ -10,6 +10,9 @@ APK="${@:(-2):1}"
 
 function sync {
     local threads=$1
+    if [ -z "$threads" ]; then
+        threads=4
+    fi
     repo sync -j${threads}
 }
 
