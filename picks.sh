@@ -42,12 +42,6 @@ cd $ROOT
 
 cd frameworks/base
 HEAD=${get_our_head}
-pstest 13546
-verify_clean_pick $HEAD
-pstest 13559
-verify_clean_pick $HEAD
-pstest 13560
-verify_clean_pick $HEAD
 cd $ROOT
 
 cd packages/apps/Settings
