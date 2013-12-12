@@ -16,6 +16,10 @@ function sync {
     repo sync -j${threads}
 }
 
+function curl_local {
+    curl -L -o .repo/local_manifests/local_manifest.xml -O -L https://raw.github.com/BMc08GT/local_manifest/master/default.xml
+}
+
 function apk {
     . build/envsetup.sh
     lunch aokp_${DEVICE}-userdebug
@@ -60,7 +64,8 @@ function help {
   -b, --build         Builds the current source. Requires DEVICE be provided
   -a, --all           Builds all devices listed in $VENDOR/vendorsetup.sh
   -m, --mmm           Compiles the specified apk individually. Requires APK be provided
-  -p, --pick          Run picks script"
+  -p, --pick          Run picks script
+  -u, --curl_local    Curl local manifest"
 }
 
 function clean {
@@ -102,17 +107,20 @@ do
         --all) args="${args} -a ";;
         --mmm) args="${args} -m ";;
         --pick) args="${args} -p ";;
+        --curl_local) args="${args} -u ";;
         *) [[ "${arg:0:1}" == "-" ]] || delim="\""
         args="${args}${delim}${arg}${delim} ";;
     esac
 done
 
 eval set -- $args
-    while getopts ":hspcliam:b:?" option 2>/dev/null
+    while getopts ":huspcliam:b:?" option 2>/dev/null
     do
         case $option in
             h) help
                 exit
+                ;;
+            u) curl_local
                 ;;
             s) sync $2
                 ;;
