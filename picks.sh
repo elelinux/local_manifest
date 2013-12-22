@@ -24,32 +24,22 @@ read FILTER
 
 if [ "$FILTER" = "" ]; then
 
-cd build
-#Update pstest
-HEAD=${get_our_head}
-pstest 13548/2
-verify_clean_pick $HEAD
-cd $ROOT
-
-# Reinitialize with updated pstest
-. build/envsetup.sh >/dev/null 2>&1
-
-cd build
-HEAD=${get_our_head}
-pstest 13607
-verify_clean_pick $HEAD
+cd device/htc/m7-common
+HEAD=${get_out_head}
+pstest 14130
+pstest 14091
 cd $ROOT
 
 cd frameworks/base
 HEAD=${get_our_head}
+pstest 14068
+pstest 14069
+pstest 14081
 cd $ROOT
 
 cd packages/apps/Settings
 HEAD=${get_our_head}
-pstest 13535
-verify_clean_pick $HEAD
-pstest 13536
-verify_clean_pick $HEAD
+pstest 14066
 cd $ROOT
 
 fi
