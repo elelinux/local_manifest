@@ -18,28 +18,33 @@ function filter_list {
 	exit 0
 }
 
+function pick() {
+   local array=$1
+   for i in ${array[@]} do
+       pstest $i
+   done
+}
+
 function pick_em() {
 echo "Which filter to be used for picks [default: No filter<enter>]"
 read FILTER
 
 if [ "$FILTER" = "" ]; then
 
+declare -a m7-common=( '14130' '14091' )
+declare -a fw_base=( '14068' '14069' '14081' )
+declare -a settings=( '14066' )
+
 cd device/htc/m7-common
-HEAD=${get_out_head}
-pstest 14130
-pstest 14091
+pick m7-common
 cd $ROOT
 
 cd frameworks/base
-HEAD=${get_our_head}
-pstest 14068
-pstest 14069
-pstest 14081
+pick fw_base
 cd $ROOT
 
 cd packages/apps/Settings
-HEAD=${get_our_head}
-pstest 14066
+pick settings
 cd $ROOT
 
 fi

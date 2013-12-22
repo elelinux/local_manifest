@@ -6,13 +6,9 @@
 
   <remote  name="bmc"
            fetch="https://github.com/BMc08GT/" />
-  <remote  name="rc"
-           fetch="https://github.com/romanbb" />
-           
            
   <!-- add this repo -->
   <project path="local_manifest" name="local_manifest" remote="bmc" revision="master" />
   
-  <project path="packages/apps/ROMControl" name="ROMControl_v2_wip" remote="rc" revision="master" />
   
 </manifest>
