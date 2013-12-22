@@ -74,7 +74,7 @@ function clean {
 }
 
 function clobber {
-    make clobber
+    rm -rf out
 }
 
 function installclean {
