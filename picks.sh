@@ -3,23 +3,25 @@
 
 # Initialize helper functions
 . helper_functions
+. build/envsetup.sh
 
 function pick() {
-   local array=$1
-   for i in ${array[@]} do
-       pstest $i
+   declare -a array=("${!1}")
+   for index in ${!array[@]}; do
+       pstest ${array[index]}
    done
 }
 
-declare -a repos=("device_htc_m7-common" "frameworks_base")
-declare -a repo_arrays=('m7_common' 'fw_base' 'settings')
-declare -a m7_common=('14130' '14091')
+#declare -a repos=("device_htc_m7-common" "frameworks_base")
+#declare -a repo_arrays=('m7_common' 'fw_base' 'settings')
+declare -a m7_common=('14091')
 declare -a fw_base=('14068' '14069')
 
-for index in ${!repos[*]}; do
-    dir=$( echo ${repos[index]} | sed 's/_/\//g' )
-    cd $dir
-    array=${repo_arrays[$index]}
-    pick $array
-    cd $ROOT
-done
+cd device/htc/m7-common
+pick m7_common[@]
+cd -
+
+cd frameworks/base
+pick fw_base[@]
+cd -
+
