@@ -4,20 +4,6 @@
 # Initialize helper functions
 . helper_functions
 
-# Set null value for filter
-FILTER=
-
-# Set die ref
-DIE_REF=$1
-
-function filter_list {
-	echo " Current filters:"
-	echo "-----------------"
-	echo " No filter <enter>"
-	FILTER=bullshit
-	exit 0
-}
-
 function pick() {
    local array=$1
    for i in ${array[@]} do
@@ -25,43 +11,16 @@ function pick() {
    done
 }
 
-function pick_em() {
-echo "Which filter to be used for picks [default: No filter<enter>]"
-read FILTER
-
-if [ "$FILTER" = "" ]; then
-
+declare -a repos=("device_htc_m7-common" "frameworks_base" "packages_apps_Settings")
+declare -a repo_arrays=('m7-common' 'fw_base' 'settings')
 declare -a m7-common=( '14130' '14091' )
 declare -a fw_base=( '14068' '14069' '14081' )
 declare -a settings=( '14066' )
 
-cd device/htc/m7-common
-pick m7-common
-cd $ROOT
-
-cd frameworks/base
-pick fw_base
-cd $ROOT
-
-cd packages/apps/Settings
-pick settings
-cd $ROOT
-
-fi
-
-}
-
-# In order to use pstest must be in build environment
-. build/envsetup.sh >/dev/null 2>&1
-
-if [ "$DIE_REF" == "--resume" ]; then
-        # continue through the paces
-        pick_em
-elif [ "$DIE_REF" == "--abort" ]; then
-        # abort! abort! abort!
-        git reset --hard
-        cd $ROOT
-        exit 0;
-else
-        pick_em
-fi
+for index in ${!repos[*]}; do
+    dir=$( echo ${repos[index]} | sed 's/_/\//g' )
+    cd $dir
+    array=${repo_arrays[$index]}
+    pick $array
+    cd $ROOT
+done
