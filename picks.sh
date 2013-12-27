@@ -16,7 +16,7 @@ function pick() {
    if [ "$verify" == "1" ]; then
       directory=`pwd`
       [ -e $ROOT/.files_to_verify ] && rm $ROOT/.files_to_verify
-      echo $directory >> $ROOT/.files_to_verify
+      echo "repo: ${directory}" >> $ROOT/.files_to_verify
    fi
    for index in ${!array[@]}; do
       pstest ${array[index]}
