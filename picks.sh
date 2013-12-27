@@ -12,11 +12,15 @@ function pick() {
    done
 }
 
-#declare -a repos=("device_htc_m7-common" "frameworks_base")
-#declare -a repo_arrays=('m7_common' 'fw_base' 'settings')
-declare -a m7_common=('14345')
+declare -a m7tmo=('14456')
+declare -a m7_common=('14345' '14459' '14448' '14460')
 declare -a htc_msm8960=('14346')
-declare -a fw_base=('14068' '14221')
+declare -a fw_base=('14068' '14221' '14445' '14446' '14224')
+declare -a romcontrol=('14150')
+
+cd device/htc/m7tmo
+pick m7tmo[@]
+cd -
 
 cd device/htc/m7-common
 pick m7_common[@]
@@ -30,3 +34,6 @@ cd frameworks/base
 pick fw_base[@]
 cd -
 
+cd packages/apps/ROMControl
+pick romcontrol[@]
+cd -
