@@ -9,14 +9,14 @@
 
 if [ "$1" == "--verify" ]; then
    verify=1
+   [ -f $ROOT/.files_to_verify ] && rm $ROOT/.files_to_verify
 fi
 
 function pick() {
    declare -a array=("${!1}")
    if [ "$verify" == "1" ]; then
       directory=`pwd`
-      [ -e $ROOT/.files_to_verify ] && rm $ROOT/.files_to_verify
-      echo "repo:${directory}" >> $ROOT/.files_to_verify
+      echo "repo:${directory}" > $ROOT/.files_to_verify
    fi
    for index in ${!array[@]}; do
       pstest ${array[index]}
