@@ -26,23 +26,15 @@ function pick() {
    done
 }
 
-declare -a m7tmo=('14456')
-declare -a m7_common=('14345' '14459' '14448' '14460')
-declare -a htc_msm8960=('14346')
-declare -a fw_base=('14068' '14221' '14445' '14446' '14224')
-declare -a romcontrol=('14150' '14447')
+declare -a m7_common=('14448')
+declare -a fw_base=('14221' '14224')
+declare -a romcontrol=('14150')
 
-cd device/htc/m7tmo
-pick m7tmo[@]
-cd -
 
 cd device/htc/m7-common
 pick m7_common[@]
 cd -
 
-cd device/htc/msm8960-common
-pick htc_msm8960[@]
-cd -
 
 cd frameworks/base
 pick fw_base[@]
