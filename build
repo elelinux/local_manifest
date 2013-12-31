@@ -1,0 +1,12 @@
+#!/bin/bash
+# build script utilizing multi-brunch
+# http://gerrit.aokp.co/#/c/14560/2
+#
+devices=$*
+for i in ${devices}; do
+    brunch $i
+done
+for i in ${devices}; do
+    mkdir -p ~/www/${i}
+	find out/target/product/${i} -name aokp_${i}_kitkat_\*.zip -exec cp {} ~/www/${i}/ \;
+done
