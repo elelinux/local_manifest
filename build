@@ -4,9 +4,9 @@
 #
 devices=$*
 . build/envsetup.sh
-for i in ${devices}; do
-    brunch $i
-done
+
+brunch ${devices}
+
 for i in ${devices}; do
     mkdir -p ~/www/${i}
     find out/target/product/${i} -name aokp_${i}_\*_unofficial_\*.zip -exec cp {} ~/www/${i}/ \;
