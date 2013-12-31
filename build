@@ -8,5 +8,5 @@ for i in ${devices}; do
 done
 for i in ${devices}; do
     mkdir -p ~/www/${i}
-	find out/target/product/${i} -name aokp_${i}_kitkat_\*.zip -exec cp {} ~/www/${i}/ \;
+    find out/target/product/${i} -name aokp_${i}_\*_unofficial_\*.zip -exec cp {} ~/www/${i}/ \;
 done
