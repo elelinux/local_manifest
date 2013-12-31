@@ -3,6 +3,7 @@
 # http://gerrit.aokp.co/#/c/14560/2
 #
 devices=$*
+. build/envsetup.sh
 for i in ${devices}; do
     brunch $i
 done
