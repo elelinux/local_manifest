@@ -1,3 +1,10 @@
+#!/bin/bash
+
+#grab this repo
+curl -L -o .repo/local_manifests/local_manifest.xml -O -L https://raw.github.com/BMc08GT/local_manifest/master/default.xml
+
+repo sync -j20
+
 if [ ! -e .symlinked ]; then
 touch .symlinked
 echo " Symlinking scripts: picks.sh, and compile"
