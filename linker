@@ -9,7 +9,7 @@ if [ ! -e .symlinked ]; then
 touch .symlinked
 echo " Symlinking scripts: picks.sh, and compile"
 ln -s local_manifest/picks.sh picks.sh
-ln -s local_manifest/compile compile
+ln -s local_manifest/build multibrunch
 ln -s local_manifest/helper_functions helper_functions
 echo " making executable"
 chmod a+x picks.sh
