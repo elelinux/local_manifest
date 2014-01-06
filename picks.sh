@@ -26,10 +26,14 @@ function pick() {
    done
 }
 
-declare -a m7_common=('14448')
-declare -a fw_base=('14221' '14224')
-declare -a romcontrol=('14150')
+declare -a build=('14560')
+declare -a m7_common=('14628')
+declare -a fw_base=('14445' '14611' '14640' '14960' '14987' '14882' '15047')
+declare -a romcontrol=('14584')
 
+cd build
+pick build[@]
+cd -
 
 cd device/htc/m7-common
 pick m7_common[@]
