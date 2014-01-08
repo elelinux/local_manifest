@@ -27,8 +27,7 @@ function pick() {
 }
 
 declare -a build=('14560')
-declare -a m7_common=('14628')
-declare -a fw_base=('14445' '14611' '14640' '14960' '14987' '14882' '15047')
+declare -a fw_base=('14611' '14960' '14987' '14882' '14445')
 declare -a romcontrol=('14584')
 
 cd build
