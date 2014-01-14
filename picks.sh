@@ -27,17 +27,19 @@ function pick() {
 }
 
 declare -a build=('14560')
-declare -a fw_base=('14611' '14960' '14987' '14882' '14445')
-declare -a romcontrol=('14584')
+declare -a fw_base=('13696' '13697' '13703' '13699' '13704' '14882' '15241' '15212' '14470' '15187' '15062' '15211')
+declare -a romcontrol=('15236' '15175' '15213' '14555' '15214' '15188')
 
 cd build
+# add new pstest
+pstest 15223
+cd -
+
+. build/envsetup.sh
+
+cd 
 pick build[@]
 cd -
-
-cd device/htc/m7-common
-pick m7_common[@]
-cd -
-
 
 cd frameworks/base
 pick fw_base[@]
