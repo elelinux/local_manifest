@@ -29,6 +29,7 @@ function pick() {
 declare -a build=('14560')
 declare -a fw_base=('13696' '13697' '13703' '13699' '13704' '14882' '15241' '15212' '14470' '15187' '15062' '15211')
 declare -a romcontrol=('15236' '15175' '15213' '14555' '15214' '15188')
+declare -a settings=('15168')
 
 cd build
 # add new pstest
@@ -47,4 +48,8 @@ cd -
 
 cd packages/apps/ROMControl
 pick romcontrol[@]
+cd -
+
+cd packages/apps/Settings
+pick settings[@]
 cd -
