@@ -13,12 +13,12 @@ function lunch_and_clean() {
         lunch aokp_${devicename}-userdebug
         make clean
 }
-
+ 
 function get_device() {
         read device
         [ -z $device ] && device=m7tmo
 }
-
+ 
 function config() {
         echo " "
         echo "CLI verify config"
@@ -35,7 +35,7 @@ function config() {
         echo "Select device codename (default m7tmo)"
         get_device
 }
-
+ 
 function verify_commit() {
         populate_pick_vars
         if [ "$pass" == 1 ]; then
@@ -50,7 +50,7 @@ function verify_commit() {
         ssh gerrit gerrit review --verified $verify -m "'$message'" $commit
         echo " Commit verified -- ${prompt}."
 }
-
+ 
 function populate_pick_vars() {
         [ -z "$1" ] || pick=$1
         project=`git config --get remote.aokp.projectname`
@@ -59,41 +59,51 @@ function populate_pick_vars() {
         pick=${pick#*/*/*/*}
         commit=$( echo $pick | sed 's/\//,/g' )
 }
-
+ 
 function iterate_through_file() {
         . build/envsetup.sh >/dev/null 2>&1
         message='This is an automated message. Patchset builds in current tree.'
         verify=+1
+        let review=$1
         file=$(cat $ANDROID_BUILD_TOP/.files_to_verify)
         echo "$file" | while read line; do
-                if grep -q "repo:" <<< $line; then
-                        dir=${line##*:}
-                else
-                        cd $dir
-                        populate_pick_vars $line
-                        echo "Verifiying ${commit}"
-                        ssh gerrit gerrit review --verified $verify -m "'$message'" $commit < /dev/null
-                        cd -
-                fi
+        if grep -q "repo:" <<< $line; then
+        dir=${line##*:}
+        else
+        cd $dir
+        populate_pick_vars $line
+        echo "Verifiying ${commit}"
+        if [ -z "$review" ]; then
+        ssh gerrit gerrit review --verified $verify -m "'$message'" $commit < /dev/null
+        else
+        ssh gerrit gerrit review --code-review $review $commit < /dev/null
+        fi
+        cd -
+        fi
         done
 }
-
+ 
 # For now when using make clean setup cli manually
 if [ "$1" == "-cs" ]; then
         repo sync -j50
         lunch_and_clean
         config
 fi
-
+ 
 if [ "$1" == "-auto" ]; then
-        iterate_through_file
-        exit 0
+        if [ "$2" == "+1" ] || [ "$2" == "-1" ]; then
+                iterate_through_file $2
+                exit 0
+        else
+                iterate_through_file
+                exit 0
+        fi
 fi
-
+ 
 # ============================================
 # jenkins
 . build/envsetup.sh >/dev/null 2>&1
-
+ 
 if [ -z "$1" ]; then
         config
 else
@@ -103,16 +113,16 @@ else
         pick=$2
         device=$3
         if ! [[ $pick =~ $re ]]; then
-                        echo "Not a valid patch(Must be a number)."
-                        cd -
-                        exit 1
+                echo "Not a valid patch(Must be a number)."
+                cd -
+                exit 1
         fi
         if [ -z "$device" ]; then
-                        echo "Select device codename (default m7tmo)"
-                        get_device
+                echo "Select device codename (default m7tmo)"
+                get_device
         fi
 fi
-
+ 
 # Cherry-pick commit to be verified
 cd $directory
 pstest $pick
