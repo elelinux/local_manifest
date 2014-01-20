@@ -35,8 +35,11 @@ declare -a fw_rs=('15401')
 declare -a htc=('15402')
 # declare -a romcontrol=('')
 
+cd bionic
+pick bionic[@]
+cd -
 
-cd 
+cd build
 pick build[@]
 cd -
 
