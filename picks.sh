@@ -31,10 +31,8 @@ function pick() {
 }
 
 declare -a build=('14560' '15458')
-declare -a fw_base=('14470' '15062' '15432' '15374' '15434' '15450' '15459')
-declare -a camera2=('15379')
-declare -a gallery2=('15378')
-declare -a romcontrol=('14555' '15435' '15330')
+declare -a fw_base=('14470' '15062' '15432' '15374' '15434' '15450')
+declare -a romcontrol=('14555' '15435')
 declare -a telephony=('14562')
 
 cd build
@@ -43,14 +41,6 @@ cr
 
 cd frameworks/base
 pick fw_base[@]
-cr
-
-cd packages/apps/Camera2
-pick camera2[@]
-cr
-
-cd packages/apps/Gallery2
-pick gallery2[@]
 cr
 
 cd packages/apps/ROMControl
