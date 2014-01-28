@@ -30,10 +30,18 @@ function pick() {
    done
 }
 
+declare -a bionic=('15646')
 declare -a build=('14560' '15458')
-declare -a fw_base=('14470' '15062' '15432' '15374' '15434' '15450')
+declare -a fw_base=('14470' '15432' '15374' '15434' '15450')
+declare -a m7_kernel=('15669')
 declare -a romcontrol=('14555' '15435')
-declare -a telephony=('14562')
+declare -a telephony=('15462')
+declare -a white=('15618')
+declare -a vold=('15440' '15441')
+
+cd bionic
+pick bionic[@]
+cr
 
 cd build
 pick build[@]
@@ -43,10 +51,22 @@ cd frameworks/base
 pick fw_base[@]
 cr
 
+cd kernel/htc/m7
+pick m7_kernel[@]
+cr
+
 cd packages/apps/ROMControl
 pick romcontrol[@]
 cr
 
 cd packages/services/Telephony
 pick telephony[@]
+cr
+
+cd packages/themes/KitKatWhite
+pick white[@]
+cr
+
+cd system/vold
+pick vold[@]
 cr
