@@ -33,7 +33,7 @@ function pick() {
 declare -a bionic=('15646')
 declare -a build=('14560' '15458')
 declare -a fw_base=('14470' '15432' '15374' '15434' '15450')
-declare -a m7_kernel=('15669')
+declare -a msm8960_kernel=('15669')
 declare -a romcontrol=('14555' '15435')
 declare -a telephony=('15462')
 declare -a white=('15618')
@@ -51,7 +51,7 @@ cd frameworks/base
 pick fw_base[@]
 cr
 
-cd kernel/htc/m7
+cd kernel/htc/msm8960
 pick m7_kernel[@]
 cr
 
