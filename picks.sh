@@ -30,15 +30,12 @@ function pick() {
    done
 }
 
-declare -a bionic=('15646')
+declare -a bionic=('15696' '15697')
 declare -a build=('14560' '15458')
-declare -a fw_base=('14470' '15432' '15374' '15434' '15450' '15690' '15685')
-declare -a dialer=('15688')
-declare -a incallui=('15687')
-declare -a romcontrol=('14555' '15435' '15686')
-declare -a telephony=('15462' '15689')
-declare -a white=('15618' '15684')
-declare -a vold=('15440' '15441')
+declare -a fw_base=('14470' '15432' '15374' '15434' '15450' '15701')
+declare -a romcontrol=('14555' '15435' '15702')
+declare -a telephony=('15462')
+declare -a white=('15684')
 
 cd bionic
 pick bionic[@]
@@ -52,14 +49,6 @@ cd frameworks/base
 pick fw_base[@]
 cr
 
-cd packages/apps/Dialer
-pick dialer[@]
-cr
-
-cd packages/apps/InCallUI
-pick incallui[@]
-cr
-
 cd packages/apps/ROMControl
 pick romcontrol[@]
 cr
@@ -70,8 +59,4 @@ cr
 
 cd packages/themes/KitKatWhite
 pick white[@]
-cr
-
-cd system/vold
-pick vold[@]
 cr
