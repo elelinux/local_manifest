@@ -30,16 +30,9 @@ function pick() {
    done
 }
 
-declare -a bionic=('15696' '15697')
 declare -a build=('14560' '15458')
-declare -a fw_base=('14470' '15432' '15374' '15434' '15450' '15701')
-declare -a romcontrol=('14555' '15435' '15702')
-declare -a telephony=('15462')
-declare -a white=('15684')
-
-cd bionic
-pick bionic[@]
-cr
+declare -a fw_base=('14470' '15747' '15764')
+declare -a romcontrol=('14555' '15794' '15748')
 
 cd build
 pick build[@]
@@ -53,10 +46,3 @@ cd packages/apps/ROMControl
 pick romcontrol[@]
 cr
 
-cd packages/services/Telephony
-pick telephony[@]
-cr
-
-cd packages/themes/KitKatWhite
-pick white[@]
-cr
