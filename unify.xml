@@ -15,3 +15,5 @@
   
   <project path="device/samsung/d2" name="device/samsung/d2" remote="bmc" revision="kitkat" />
   
+</manifest>
+  
