@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+
+<!-- Default manifest to pull this repo in -->
+<!-- Other files can be overriden in scripts -->
+
+  <remote name="bmc"
+           fetch="https://github.com/BMc08GT/" />
+           
+  <remove-project name="AOKP/device/samsung/d2att" />
+  <remove-project name="AOKP/device/samsung/d2tmo" />
+  <remove-project name="AOKP/device/samsung/d2usc" />
+  <remove-project name="AOKP/device/samsung/d2vzw" />
+  <remove-project name="AOKP/device/samsung/d2-common" />
+  
+  <project path="device/samsung/d2" name="device/samsung/d2" remote="bmc" revision="kitkat" />
+  
