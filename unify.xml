@@ -11,9 +11,17 @@
   <remove-project name="AOKP/device_samsung_d2tmo" />
   <remove-project name="AOKP/device_samsung_d2usc" />
   <remove-project name="AOKP/device_samsung_d2vzw" />
-  <!-- <remove-project name="AOKP/device_samsung_d2-common" /> -->
+  <remove-project name="AOKP/device_samsung_d2-common" />
+  <remove-project name="AOKP/device_samsung_jflteatt" />
+  <remove-project name="AOKP/device_samsung_jfltecri" />
+  <remove-project name="AOKP/device_samsung_jfltecsp" />
+  <remove-project name="AOKP/device_samsung_jfltetmo" />
+  <remove-project name="AOKP/device_samsung_jflteusc" />
+  <remove-project name="AOKP/device_samsung_jfltevzw" />
+  <remove-project name="AOKP/device_samsung_jf-common" />
   
   <project path="device/samsung/d2" name="device_samsung_d2" remote="bmc" revision="kitkat" />
+  <project path="device/samsung/jflte" name="device_samsung_jflte" remote="bmc" revision="kitkat" />
   
 </manifest>
   
