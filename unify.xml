@@ -12,7 +12,6 @@
   <remove-project name="AOKP/device_samsung_d2usc" />
   <remove-project name="AOKP/device_samsung_d2vzw" />
   <remove-project name="AOKP/device_samsung_d2-common" />
-  <remove-project name="AOKP/device_samsung_jflteatt" />
   <remove-project name="AOKP/device_samsung_jfltecri" />
   <remove-project name="AOKP/device_samsung_jfltecsp" />
   <remove-project name="AOKP/device_samsung_jfltetmo" />
