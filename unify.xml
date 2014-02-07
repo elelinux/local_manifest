@@ -21,7 +21,7 @@
   <remove-project name="AOKP/device_samsung_jf-common" />
   
   <project path="device/samsung/d2" name="device_samsung_d2" remote="bmc" revision="kitkat" />
-  <project path="device/samsung/jflte" name="device_samsung_jflte" remote="bmc" revision="kitkat" />
+  <project path="device/samsung/jf" name="device_samsung_jf" remote="bmc" revision="kitkat" />
   
 </manifest>
   
