@@ -11,7 +11,7 @@
   <remove-project name="AOKP/device_samsung_d2tmo" />
   <remove-project name="AOKP/device_samsung_d2usc" />
   <remove-project name="AOKP/device_samsung_d2vzw" />
-  <remove-project name="AOKP/device_samsung_d2-common" />
+  <!-- <remove-project name="AOKP/device_samsung_d2-common" /> -->
   
   <project path="device/samsung/d2" name="device_samsung_d2" remote="bmc" revision="kitkat" />
   
