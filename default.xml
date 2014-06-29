@@ -8,15 +8,15 @@
            fetch="https://github.com/elelinux/" />
            
   <!-- elelinux samsung klte kernel -->
-  <project path="kernel/samsung/klte" name="elelinux/android_kernel_samsung_klte" remote="github" revision="cm-11.0"/>
+  <project path="kernel/samsung/klte" name="android_kernel_samsung_klte" remote="github" revision="cm-11.0"/>
 
   <!-- elelinux samsung device tree -->
-  <project path="device/samsung/klte-common" name="elelinux/android_device_samsung_klte-common" remote="github" revision="cm-11.0"/>
-  <project path="device/samsung/kltexx" name="elelinux/android_device_samsung_kltexx" remote="github" revision="cm-11.0"/>
-  <project path="device/samsung/kltetmo" name="elelinux/android_device_samsung_kltetmo" remote="github" revision="cm-11.0"/>
-  <project path="device/samsung/klteatt" name="elelinux/android_device_samsung_klteatt" remote="github" revision="cm-11.0"/>
-  <project path="device/samsung/klteusc" name="elelinux/android_device_samsung_klteusc" remote="github" revision="cm-11.0"/>
-  <project path="device/samsung/klte" name="elelinux/android_device_samsung_klte" remote="github" revision="cm-11.0"/>
+  <project path="device/samsung/klte-common" name="android_device_samsung_klte-common" remote="github" revision="cm-11.0"/>
+  <project path="device/samsung/kltexx" name="android_device_samsung_kltexx" remote="github" revision="cm-11.0"/>
+  <project path="device/samsung/kltetmo" name="android_device_samsung_kltetmo" remote="github" revision="cm-11.0"/>
+  <project path="device/samsung/klteatt" name="android_device_samsung_klteatt" remote="github" revision="cm-11.0"/>
+  <project path="device/samsung/klteusc" name="android_device_samsung_klteusc" remote="github" revision="cm-11.0"/>
+  <project path="device/samsung/klte" name="android_device_samsung_klte" remote="github" revision="cm-11.0"/>
   
   
 </manifest>
