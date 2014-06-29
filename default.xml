@@ -4,11 +4,11 @@
 <!-- Default manifest to pull this repo in -->
 <!-- Other files can be overriden in scripts -->
 
-  <remote  name="bmc"
+  <remote  name="github"
            fetch="https://github.com/elelinux/" />
            
   <!-- add this repo -->
-  <project path="local_manifest" name="local_manifest" remote="bmc" revision="master" />
+  <project path="local_manifest" name="local_manifest" remote="github" revision="master" />
   
   
 </manifest>
