@@ -5,7 +5,7 @@
 <!-- Other files can be overriden in scripts -->
 
   <remote  name="bmc"
-           fetch="https://github.com/BMc08GT/" />
+           fetch="https://github.com/elelinux/" />
            
   <!-- add this repo -->
   <project path="local_manifest" name="local_manifest" remote="bmc" revision="master" />
