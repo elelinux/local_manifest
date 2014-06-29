@@ -1,6 +1,9 @@
 # Repo init AOKP
 repo init -u https://github.com/AOKP/platform_manifest.git -b kitkat
 
+# Repo init AOKP with all kernels + devices
+repo init -u https://github.com/AOKP/platform_manifest.git -b kitkat -g all,kernel,device,vendor 
+
 # To utilize this local manifest with AOKP
 curl -L -o .repo/local_manifest.xml -O -L https://raw.github.com/elelinux/local_manifest/master/default.xml
 
